@@ -65,11 +65,10 @@ module.exports = class Graph
           gravity: 1
           scalingRatio: 0.5
           slowDown: 5
-          startingIterations: 100
         }
     else
       if @sigma.isForceAtlas2Running()
-        @sigma.stopForceAtlas2()
+        @sigma.killForceAtlas2()
 
   sigmaStartDrag: (event)->
     #console.log event

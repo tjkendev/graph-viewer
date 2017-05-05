@@ -14,10 +14,12 @@ module.exports = class GraphInput
       @rbutton.on 'click', @setRandom
     @graph = @opts.graph
 
+    @setRandom()
+
   generateRandom: ->
     # パラメータの決定
-    n = Math.floor(50 * Math.random())
-    m = Math.floor(n*(n-1)/2 * Math.random())
+    n = 2 + Math.floor(48 * Math.random())
+    m = 1 + Math.floor((n*(n-1)/2-1) * Math.random())
 
     # 全ての辺を作る
     array = []
