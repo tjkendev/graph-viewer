@@ -1,10 +1,4 @@
-global.sigma = sigma = require 'sigma'
-sigma.plugins = {}
-require 'sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes'
-worker = require 'sigma/plugins/sigma.layout.forceAtlas2/worker'
-supervisor = require 'sigma/plugins/sigma.layout.forceAtlas2/supervisor'
-
-supervisor.postMessage = (message, targetOrigin)-> window.postMessage(message, targetOrigin)
+sigma = global.sigma
 
 module.exports = class Graph
 
@@ -64,7 +58,7 @@ module.exports = class Graph
     @sigma.refresh()
 
 
-  doForceAtlas2: (active)=>
+  doForceAtlas2: (active)->
     if active
       @sigma.startForceAtlas2 {
           worker: true

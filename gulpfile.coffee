@@ -56,10 +56,20 @@ gulp.task 'compile-css', ->
     .pipe minify_css(keepSpecialComments: 0)
     .pipe gulp.dest('css')
 
+# 必要ファイルのコピー
+gulp.task 'lib-copy', ->
+  gulp.src [
+    './node_modules/sigma/build/sigma.min.js'
+    './node_modules/sigma/plugins/sigma.layout.forceAtlas2/worker.js'
+    './node_modules/sigma/plugins/sigma.layout.forceAtlas2/supervisor.js'
+    './node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js'
+  ]
+    .pipe gulp.dest('javascript/lib')
+
 # コンパイル処理
 gulp.task 'compile-all', ->
   # 直列実行するためにrun-sequenceを利用
-  run_sequence 'compile-coffee', 'compile-pug', 'browserify', 'compile-css'
+  run_sequence 'compile-coffee', 'compile-pug', 'browserify', 'compile-css', 'lib-copy'
 
 # watch処理
 gulp.task 'watch', ['compile-all'], ->
