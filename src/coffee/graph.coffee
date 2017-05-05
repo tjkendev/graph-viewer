@@ -15,6 +15,7 @@ module.exports = class Graph
         type: 'canvas'
       settings:
         edgeLabelSize: 'proportional'
+        labelThreshold: 0
     }
     @graph = @sigma.graph
     @dragListener = sigma.plugins.dragNodes(@sigma, @sigma.renderers[0])

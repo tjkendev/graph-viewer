@@ -1,3 +1,10 @@
+@input-color: #f7f7f7;
+@background-color: #ddd;
+@border-color: #222;
+@button-color: #e3e3e3;
+@border-noactive-color: #999;
+@button-active-color: #f0f0f0;
+
 .left {
   float: left;
 }
@@ -12,7 +19,7 @@
   width: 640px;
   margin: 0 auto;
   font-size: 12px;
-  background-color: #ddd;
+  background-color: @background-color;
   height: 600px;
   padding: 10px;
   border-radius: 20px;
@@ -37,12 +44,33 @@ div.graph-input {
   margin: 2px;
 }
 
+.tab-selector {
+  .tab-option {
+    width: 71px;
+    text-align: center;
+    background-color: @button-color ;
+    color: #888;
+    border: 2px @border-noactive-color solid;
+    padding-top: 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .tab-option.active {
+    .tab-option;
+    color: #000;
+    border: 2px @border-color solid;
+    background-color: @button-active-color;
+    font-weight: bold;
+  }
+}
+
+
 textarea.graph-input {
   font-size: 18px;
   width: 150px;
   height: 200px;
   resize: none;
-  background-color: #f7f7f7;
+  background-color: @input-color;
 }
 
 button {
@@ -56,5 +84,5 @@ button {
   width: 98%;
   margin-right: 2%;
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: @input-color;
 }

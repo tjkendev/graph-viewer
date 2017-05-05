@@ -68,14 +68,21 @@ gulp.task 'compile-lib', ->
     .pipe uglify(preserveComments: 'some')
     .pipe gulp.dest('javascript')
 
+gulp.task 'compile-js-all', ->
+  run_sequence 'compile-coffee', 'compile-pug', 'browserify'
+
+gulp.task 'compile-css-all', ->
+  run_sequence 'compile-css'
+
 # コンパイル処理
 gulp.task 'compile-all', ->
   # 直列実行するためにrun-sequenceを利用
-  run_sequence 'compile-coffee', 'compile-pug', 'browserify', 'compile-css', 'compile-lib'
+  run_sequence ['compile-js-all', 'compile-css-all', 'compile-lib']
 
 # watch処理
 gulp.task 'watch', ['compile-all'], ->
-  gulp.watch './src/**/*', ['compile-all']
+  gulp.watch ['./src/coffee/*', './src/pug/*'], ['compile-js-all']
+  gulp.watch ['./src/less/*'], ['compile-css-all']
 
 # デフォルト処理
 gulp.task 'default', ['compile-all']

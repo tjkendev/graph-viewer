@@ -1,8 +1,9 @@
-- var textarea_placeholder = "N M\np1 q1\n...\npM qM"
 .component
-  .caption
-    |Graph Input
-  textarea.graph-input(placeholder=textarea_placeholder)
+  .tab-selector
+    .tab-option.left.active(type="graph") Graph
+    .tab-option.left(type="tree") Tree
+    .clear
+  textarea.graph-input
 
   button.apply-button(type="button")
     |Draw Graph
@@ -11,9 +12,11 @@
     input.force-atlas(type="checkbox")
     |ForceAtlas2 Algorithm
 
-hr
-
 .component
   button.random-button(type="button")
     |Generate Random Graph
+
+.component
+  button.clear-button(type="button")
+    |Clear Input
 
