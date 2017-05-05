@@ -45,7 +45,7 @@ gulp.task 'browserify', ->
       .bundle()
       .pipe source(app_name)
       .pipe buffer()
-      .pipe uglify()
+      .pipe uglify(preserveComments: 'some')
       .pipe gulp.dest('javascript')
 
 # cssコンパイル
@@ -61,12 +61,11 @@ gulp.task 'compile-css', ->
 gulp.task 'compile-lib', ->
   gulp.src [
     './node_modules/sigma/build/sigma.min.js'
-    './node_modules/sigma/plugins/sigma.layout.forceAtlas2/worker.js'
-    './node_modules/sigma/plugins/sigma.layout.forceAtlas2/supervisor.js'
-    './node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js'
+    './node_modules/sigma/build/plugins/sigma.layout.forceAtlas2.min.js'
+    './node_modules/sigma/build/plugins/sigma.plugins.dragNodes.min.js'
   ]
     .pipe concat('lib.js')
-    .pipe uglify()
+    .pipe uglify(preserveComments: 'some')
     .pipe gulp.dest('javascript')
 
 # コンパイル処理

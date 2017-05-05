@@ -9,8 +9,7 @@
   "author": "yaketake08",
   "license": "MIT",
   "browser": {
-    "jquery": "./node_modules/jquery/dist/jquery.min.js",
-    "sigma": "./node_modules/sigma/build/sigma.require.js"
+    "jquery": "./node_modules/jquery/dist/jquery.min.js"
   },
   "devDependencies": {
     "browserify": "^14.3.0",
