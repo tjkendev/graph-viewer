@@ -33,21 +33,21 @@ module.exports = class Graph
     return unless graph?
 
     nodes = []
-    for i in [1..(graph.n)]
+    for i in [1..(graph.n)] by 1
       nodes.push {
         id: 'n' + i
         label: String(i)
         x: Math.random()
         y: Math.random()
-        size: 10 #Math.random()
+        size: 10
         color: '#666'
       }
     edges = []
-    for i in [1..(graph.m)]
+    for i in [1..(graph.m)] by 1
       [p, q] = graph.edges[i-1]
       edges.push {
         id: 'e' + i
-        label: 'Edge ' + i
+        label: 'e' + i
         source: 'n' + p
         target: 'n' + q
         size: 5
@@ -66,7 +66,6 @@ module.exports = class Graph
 
   doForceAtlas2: (active)=>
     if active
-      console.log @sigma.supervisor
       @sigma.startForceAtlas2 {
           worker: true
           gravity: 1
