@@ -4,6 +4,7 @@ coffee = require 'gulp-coffee'
 pug = require 'gulp-pug'
 less = require 'gulp-less'
 cssimport = require 'gulp-cssimport'
+concat = require 'gulp-concat'
 minify_css = require 'gulp-minify-css'
 uglify = require 'gulp-uglify'
 plumber = require 'gulp-plumber'
@@ -57,19 +58,21 @@ gulp.task 'compile-css', ->
     .pipe gulp.dest('css')
 
 # 必要ファイルのコピー
-gulp.task 'lib-copy', ->
+gulp.task 'compile-lib', ->
   gulp.src [
     './node_modules/sigma/build/sigma.min.js'
     './node_modules/sigma/plugins/sigma.layout.forceAtlas2/worker.js'
     './node_modules/sigma/plugins/sigma.layout.forceAtlas2/supervisor.js'
     './node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js'
   ]
-    .pipe gulp.dest('javascript/lib')
+    .pipe concat('lib.js')
+    .pipe uglify()
+    .pipe gulp.dest('javascript')
 
 # コンパイル処理
 gulp.task 'compile-all', ->
   # 直列実行するためにrun-sequenceを利用
-  run_sequence 'compile-coffee', 'compile-pug', 'browserify', 'compile-css', 'lib-copy'
+  run_sequence 'compile-coffee', 'compile-pug', 'browserify', 'compile-css', 'compile-lib'
 
 # watch処理
 gulp.task 'watch', ['compile-all'], ->
