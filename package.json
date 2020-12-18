@@ -12,27 +12,29 @@
     "jquery": "./node_modules/jquery/dist/jquery.min.js"
   },
   "devDependencies": {
-    "browserify": "^14.3.0",
-    "coffee-script": "^1.12.5",
-    "coffeeify": "^2.1.0",
-    "gulp": "^3.9.1",
-    "gulp-cli": "^1.3.0",
-    "gulp-coffee": "^2.3.4",
+    "browserify": "^17.0.0",
+    "coffeeify": "^3.0.1",
+    "coffeescript": "^2.5.1",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "gulp-coffee": "^3.0.3",
     "gulp-concat": "^2.6.1",
-    "gulp-cssimport": "^5.0.0",
-    "gulp-less": "^3.3.0",
-    "gulp-load-plugins": "^1.5.0",
+    "gulp-cssimport": "^7.0.0",
+    "gulp-less": "^4.0.1",
+    "gulp-load-plugins": "^2.0.6",
     "gulp-minify-css": "^1.2.4",
-    "gulp-plumber": "^1.1.0",
-    "gulp-pug": "^3.3.0",
-    "gulp-uglify": "^2.1.2",
-    "gulp-watch": "^4.3.11",
+    "gulp-plumber": "^1.2.1",
+    "gulp-pug": "^4.0.1",
+    "gulp-uglify-es": "^2.0.0",
+    "gulp-watch": "^5.0.1",
     "gulp-webpack": "^1.5.0",
-    "jquery": "^3.2.1",
-    "pugify": "^2.0.1",
-    "run-sequence": "^1.2.2",
-    "sigma": "^1.2.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "jquery": "^3.5.1",
+    "pugify": "^2.2.0",
+    "sigma": "^1.2.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "repository": {
+    "url": "https://github.com/tjkendev/graph-viewer"
   }
 }

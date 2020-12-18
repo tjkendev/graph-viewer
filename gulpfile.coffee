@@ -6,9 +6,8 @@ less = require 'gulp-less'
 cssimport = require 'gulp-cssimport'
 concat = require 'gulp-concat'
 minify_css = require 'gulp-minify-css'
-uglify = require 'gulp-uglify'
+uglify = require('gulp-uglify-es').default
 plumber = require 'gulp-plumber'
-run_sequence = require 'run-sequence'
 
 # browserify用
 browserify = require 'browserify'
@@ -17,72 +16,85 @@ buffer = require 'vinyl-buffer'
 
 # 設定
 app_name = 'main.js'
+lib_name = 'lib.js'
 
 # CoffeeScriptコンパイル
-gulp.task 'compile-coffee', ->
+compile_coffee = (cb) ->
   gulp.src 'src/coffee/**/*.coffee'
       .pipe plumber()
       .pipe coffee()
       .pipe gulp.dest('tmp/coffee')
+  cb()
 
 # pugコンパイル
-gulp.task 'compile-pug', ->
+compile_pug = (cb) ->
   gulp.src 'src/pug/**/*.pug'
       .pipe plumber()
-      .pipe pug
+      .pipe pug {
         pretty: true
         client: true
+      }
       .pipe gulp.dest('tmp/pug')
+  cb()
 
 # 外部ライブラリをbrowserifyで導入
-gulp.task 'browserify', ->
-  browserify
+compile_main = (cb) ->
+  browserify {
         entries: ["src/coffee/main.coffee"]
         extensions: ['.coffee', '.pug', '.js']
         paths: ['./node_modules']
+  }
       .transform 'coffeeify'
       .transform 'pugify'
       .bundle()
       .pipe source(app_name)
       .pipe buffer()
-      .pipe uglify(preserveComments: 'some')
+      .pipe uglify()
       .pipe gulp.dest('javascript')
+  cb()
 
 # cssコンパイル
-gulp.task 'compile-css', ->
+compile_css = (cb) ->
   gulp.src 'src/less/**/*.less'
     .pipe plumber()
     .pipe less()
     .pipe cssimport()
-    .pipe minify_css(keepSpecialComments: 0)
+    .pipe minify_css({ keepSpecialComments: 0 })
     .pipe gulp.dest('css')
+  cb()
 
-# 必要ファイルのコピー
-gulp.task 'compile-lib', ->
+# 必要なライブラリをまとめる
+compile_lib = (cb) ->
   gulp.src [
     './node_modules/sigma/build/sigma.min.js'
     './node_modules/sigma/build/plugins/sigma.layout.forceAtlas2.min.js'
     './node_modules/sigma/build/plugins/sigma.plugins.dragNodes.min.js'
   ]
-    .pipe concat('lib.js')
-    .pipe uglify(preserveComments: 'some')
+    .pipe concat(lib_name)
+    .pipe uglify()
     .pipe gulp.dest('javascript')
-
-gulp.task 'compile-js-all', ->
-  run_sequence 'compile-coffee', 'compile-pug', 'browserify'
-
-gulp.task 'compile-css-all', ->
-  run_sequence 'compile-css'
+  cb()
 
 # コンパイル処理
-gulp.task 'compile-all', ->
-  # 直列実行するためにrun-sequenceを利用
-  run_sequence ['compile-js-all', 'compile-css-all', 'compile-lib']
+compile_all = gulp.series(compile_main, compile_css, compile_lib)
 
 # watch処理
-gulp.task 'watch', ['compile-all'], ->
-  gulp.watch ['./src/coffee/*', './src/pug/*'], ['compile-js-all']
-  gulp.watch ['./src/less/*'], ['compile-css-all']
+watch_files = (cb) ->
+  gulp.series compile_all
+  gulp.watch ['./src/coffee/*', './src/pug/*'], compile_main
+  gulp.watch ['./src/less/*'], compile_css
+  cb()
+
+
+# 各処理コマンド
+exports["convert-coffee"] = compile_coffee
+exports["convert-pug"] = compile_pug
+
+exports.compile = compile_all
+exports["compile-main"] = compile_main
+exports["compile-css"] = compile_css
+exports["compile-lib"] = compile_lib
+exports.watch = watch_files
 
 # デフォルト処理
-gulp.task 'default', ['compile-all']
+exports.default = compile_all
