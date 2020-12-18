@@ -1,6 +1,6 @@
 
 module.exports = class GraphInput
-  constructor: (@opts={})->
+  constructor: (@opts = {}) ->
     @container = @opts.container
     @graph = @opts.graph
     @graphType = "graph"
@@ -31,17 +31,17 @@ module.exports = class GraphInput
   generateRandomGraph: ->
     # パラメータの決定
     n = 2 + Math.floor(48 * Math.random())
-    m = 1 + Math.floor((n*(n-1)/2-1) * Math.random())
+    m = 1 + Math.floor((n * (n - 1) / 2 - 1) * Math.random())
 
     # 全ての辺を作る
     array = []
     for i in [1..n] by 1
-      for j in [i+1..n] by 1
+      for j in [(i + 1)..n] by 1
         array.push [i, j]
 
     # Fisher-Yates Shuffle
-    for i in [array.length-1..1] by -1
-      j = Math.floor(Math.random() * (i-1))
+    for i in [(array.length - 1)..1] by -1
+      j = Math.floor(Math.random() * (i - 1))
       tmp = array[i]; array[i] = array[j]; array[j] = tmp
 
     text = ["#{n} #{m}"]
@@ -56,18 +56,18 @@ module.exports = class GraphInput
     n = 2 + Math.floor(48 * Math.random())
     text = ["#{n}"]
     for i in [2..n] by 1
-      j = 1 + Math.floor(Math.random() * (i-2))
+      j = 1 + Math.floor(Math.random() * (i - 2))
       text.push "#{j}"
     return text.join('\n')
 
-  parseGraph: (input)->
+  parseGraph: (input) ->
     return null unless input?
 
     lines = input.split('\n')
     [n, m] = lines[0].split(' ').map(Number)
-    return null if lines.length < m+1
+    return null if lines.length < m + 1
 
-    edges = lines.slice(1, m+1).map (line)-> [p, q] = line.split(' ').map(Number)
+    edges = lines.slice(1, m + 1).map (line) -> [p, q] = line.split(' ').map(Number)
 
     return {
       n: n
@@ -75,16 +75,16 @@ module.exports = class GraphInput
       edges: edges
     }
 
-  parseTree: (input)->
+  parseTree: (input) ->
     return null unless input?
 
     lines = input.split('\n')
     n = Number(lines[0])
     return null if lines.length < n
 
-    m = n-1
+    m = n - 1
 
-    edges = lines.slice(1, n).map (line,idx)-> [idx+2, Number(line)]
+    edges = lines.slice(1, n).map (line, idx) -> [idx + 2, Number(line)]
 
     return {
       n: n
@@ -109,26 +109,26 @@ module.exports = class GraphInput
       graph = @parseTree(input)
 
     if graph == null
-      graph = {n: 0, m: 0, edges: []}
+      graph = { n: 0, m: 0, edges: [] }
 
     @graph.setGraph graph
     @clearForceAtlas2()
 
   # force atlas 2で移動させるかを切り替え
-  checkForceAtlas2: (event)=>
+  checkForceAtlas2: (event) =>
     $el = $(event.currentTarget)
     @graph.doForceAtlas2 $el.prop("checked")
 
-  clearForceAtlas2: (event)=>
+  clearForceAtlas2: (event) =>
     @chkbox.prop("checked", false)
 
   # 入力のクリア
-  clearInput: (event)=>
+  clearInput: (event) =>
     @textarea.val ""
     @apply()
 
   # タブ切り替え
-  changeTab: (event)=>
+  changeTab: (event) =>
     $el = $(event.currentTarget)
     return if $el.hasClass("active")
 

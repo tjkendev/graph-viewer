@@ -2,7 +2,7 @@ sigma = global.sigma
 
 module.exports = class Graph
 
-  constructor: (@opts={})->
+  constructor: (@opts = {}) ->
     @container = @opts.container
     if @container?
       @container.html require('../pug/graph.pug')()
@@ -10,12 +10,14 @@ module.exports = class Graph
     viewer = @container?.find("#graph-viewer")[0]
 
     @sigma = new sigma {
-      renderer:
+      renderer: {
         container: viewer
         type: 'canvas'
-      settings:
+      }
+      settings: {
         edgeLabelSize: 'proportional'
         labelThreshold: 0
+      }
     }
     @graph = @sigma.graph
     @dragListener = sigma.plugins.dragNodes(@sigma, @sigma.renderers[0])
@@ -24,7 +26,7 @@ module.exports = class Graph
     @dragListener.bind 'drop', @sigmaDrop
     @dragListener.bind 'dragend', @sigmaDragEnd
 
-  setGraph: (graph)->
+  setGraph: (graph) ->
     return unless graph?
 
     nodes = []
@@ -39,7 +41,7 @@ module.exports = class Graph
       }
     edges = []
     for i in [1..(graph.m)] by 1
-      [p, q] = graph.edges[i-1]
+      [p, q] = graph.edges[i - 1]
       edges.push {
         id: 'e' + i
         label: 'e' + i
@@ -59,7 +61,7 @@ module.exports = class Graph
     @sigma.refresh()
 
 
-  doForceAtlas2: (active)->
+  doForceAtlas2: (active) ->
     if active
       @sigma.startForceAtlas2 {
           worker: true
@@ -71,11 +73,11 @@ module.exports = class Graph
       if @sigma.isForceAtlas2Running()
         @sigma.killForceAtlas2()
 
-  sigmaStartDrag: (event)->
+  sigmaStartDrag: (event) ->
     #console.log event
-  sigmaDrag: (event)->
+  sigmaDrag: (event) ->
     #console.log event
-  sigmaDrop: (event)->
+  sigmaDrop: (event) ->
     #console.log event
-  sigmaDragEnd: (event)->
+  sigmaDragEnd: (event) ->
     #console.log event
