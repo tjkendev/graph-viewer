@@ -19,15 +19,14 @@ app_name = 'main.js'
 lib_name = 'lib.js'
 
 # CoffeeScriptコンパイル
-compile_coffee = (cb) ->
+compile_coffee = ->
   gulp.src 'src/coffee/**/*.coffee'
       .pipe plumber()
       .pipe coffee()
       .pipe gulp.dest('tmp/coffee')
-  cb()
 
 # pugコンパイル
-compile_pug = (cb) ->
+compile_pug = ->
   gulp.src 'src/pug/**/*.pug'
       .pipe plumber()
       .pipe pug {
@@ -35,10 +34,9 @@ compile_pug = (cb) ->
         client: true
       }
       .pipe gulp.dest('tmp/pug')
-  cb()
 
 # 外部ライブラリをbrowserifyで導入
-compile_main = (cb) ->
+compile_main = ->
   browserify {
         entries: ["src/coffee/main.coffee"]
         extensions: ['.coffee', '.pug', '.js']
@@ -51,20 +49,18 @@ compile_main = (cb) ->
       .pipe buffer()
       .pipe uglify()
       .pipe gulp.dest('javascript')
-  cb()
 
 # cssコンパイル
-compile_css = (cb) ->
+compile_css = ->
   gulp.src 'src/less/**/*.less'
     .pipe plumber()
     .pipe less()
     .pipe cssimport()
     .pipe minify_css({ keepSpecialComments: 0 })
     .pipe gulp.dest('css')
-  cb()
 
 # 必要なライブラリをまとめる
-compile_lib = (cb) ->
+compile_lib = ->
   gulp.src [
     './node_modules/sigma/build/sigma.min.js'
     './node_modules/sigma/build/plugins/sigma.layout.forceAtlas2.min.js'
@@ -73,17 +69,14 @@ compile_lib = (cb) ->
     .pipe concat(lib_name)
     .pipe uglify()
     .pipe gulp.dest('javascript')
-  cb()
 
 # コンパイル処理
-compile_all = gulp.series(compile_main, compile_css, compile_lib)
+compile_all = gulp.parallel(compile_main, compile_css, compile_lib)
 
 # watch処理
-watch_files = (cb) ->
-  gulp.series compile_all
-  gulp.watch ['./src/coffee/*', './src/pug/*'], compile_main
-  gulp.watch ['./src/less/*'], compile_css
-  cb()
+watch_files = ->
+    gulp.watch ['./src/coffee/*', './src/pug/*'], compile_main
+    gulp.watch ['./src/less/*'], compile_css
 
 
 # 各処理コマンド
