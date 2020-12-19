@@ -65,6 +65,7 @@ compile_lib = ->
     './node_modules/sigma/build/sigma.min.js'
     './node_modules/sigma/build/plugins/sigma.layout.forceAtlas2.min.js'
     './node_modules/sigma/build/plugins/sigma.plugins.dragNodes.min.js'
+    './node_modules/sigma/build/plugins/sigma.renderers.edgeLabels.min.js'
   ]
     .pipe concat(lib_name)
     .pipe uglify()

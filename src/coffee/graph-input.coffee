@@ -65,9 +65,14 @@ module.exports = class GraphInput
 
     lines = input.split('\n')
     [n, m] = lines[0].split(' ').map(Number)
-    return null if lines.length < m + 1
+    m = lines.length - 1 if lines.length < m + 1
 
-    edges = lines.slice(1, m + 1).map (line) -> [p, q] = line.split(' ').map(Number)
+    edges = lines.slice(1, m + 1).map (line) ->
+        [p, q, r] = line.split(' ')
+        v1 = Number(p)
+        v2 = Number(q)
+        return null if v1 == NaN || v2 == NaN
+        return [v1, v2, r ? ""]
 
     return {
       n: n
@@ -80,11 +85,16 @@ module.exports = class GraphInput
 
     lines = input.split('\n')
     n = Number(lines[0])
-    return null if lines.length < n
-
     m = n - 1
 
-    edges = lines.slice(1, n).map (line, idx) -> [idx + 2, Number(line)]
+    ln = Math.min(n, lines.length)
+
+    edges = lines.slice(1, ln).map (line, idx) ->
+        [p, r] = line.split(' ')
+        v1 = idx + 2
+        v2 = Number(p)
+        return null if v2 == NaN
+        return [v1, v2, r ? ""]
 
     return {
       n: n
@@ -143,7 +153,6 @@ module.exports = class GraphInput
   # placeholderの変更
   setPlaceHolder: ->
     if @graphType == 'graph'
-      @textarea.attr 'placeholder', "Input:\n-----\nN M\np1 q1\n...\npM qM\n-----\nConstraints:\n1≦pi,qi≦N"
+      @textarea.attr 'placeholder', "Input:\n-----\nn m\np₁ q₁\n...\npₘ qₘ\n-----\nConstraints:\n1≤pᵢ,qᵢ≤n"
     else
-      @textarea.attr 'placeholder', "Input:\n-----\nN\np2\n...\npN\n-----\nConstraints:\n1≦pi≦i-1"
-
+      @textarea.attr 'placeholder', "Input:\n-----\nn\np₂\n...\npₙ\n-----\nConstraints:\n1≤pᵢ≤i-1"

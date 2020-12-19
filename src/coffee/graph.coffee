@@ -15,8 +15,10 @@ module.exports = class Graph
         type: 'canvas'
       }
       settings: {
-        edgeLabelSize: 'proportional'
+        defaultEdgeLabelSize: 16
+        edgeLabelSize: 'fixed'
         labelThreshold: 0
+        drawEdgeLabels: true
       }
     }
     @graph = @sigma.graph
@@ -30,9 +32,9 @@ module.exports = class Graph
     return unless graph?
 
     nodes = []
-    for i in [1..(graph.n)] by 1
+    for i in [1 .. (graph.n)] by 1
       nodes.push {
-        id: 'n' + i
+        id: "n#{i}"
         label: String(i)
         x: Math.random()
         y: Math.random()
@@ -40,13 +42,14 @@ module.exports = class Graph
         color: '#666'
       }
     edges = []
-    for i in [1..(graph.m)] by 1
-      [p, q] = graph.edges[i - 1]
+    for i in [1 .. (graph.m)] by 1
+      continue unless graph.edges[i - 1]?
+      [v1, v2, label] = graph.edges[i - 1]
       edges.push {
-        id: 'e' + i
-        label: 'e' + i
-        source: 'n' + p
-        target: 'n' + q
+        id: "e#{i}"
+        label: label
+        source: "n#{v1}"
+        target: "n#{v2}"
         size: 5
         color: '#ccc'
         type: 'line'
