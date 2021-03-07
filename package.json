@@ -18,7 +18,6 @@
     "coffeescript": "^2.5.1",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
-    "gulp-cli": "^2.3.0",
     "gulp-coffee": "^3.0.3",
     "gulp-concat": "^2.6.1",
     "gulp-cssimport": "^7.0.0",
@@ -27,15 +26,12 @@
     "gulp-plumber": "^1.2.1",
     "gulp-pug": "^4.0.1",
     "gulp-uglify-es": "^2.0.0",
-    "gulp-watch": "^5.0.1",
     "jquery": "^3.6.0",
-    "lodash.template": "^4.5.0",
     "pug": "^3.0.2",
     "pugify": "^2.2.0",
     "sigma": "^1.2.1",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "yargs-parser": "^20.2.6"
+    "vinyl-source-stream": "^2.0.0"
   },
   "repository": {
     "url": "https://github.com/tjkendev/graph-viewer"
