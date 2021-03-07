@@ -31,7 +31,8 @@
     "pugify": "^2.2.0",
     "sigma": "^1.2.1",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "vinyl-source-stream": "^2.0.0",
+    "yargs-parser": "^20.2.6"
   },
   "repository": {
     "url": "https://github.com/tjkendev/graph-viewer"
