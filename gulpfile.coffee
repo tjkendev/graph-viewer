@@ -5,7 +5,7 @@ pug = require 'gulp-pug'
 less = require 'gulp-less'
 cssimport = require 'gulp-cssimport'
 concat = require 'gulp-concat'
-minify_css = require 'gulp-minify-css'
+clean_css = require 'gulp-clean-css'
 uglify = require('gulp-uglify-es').default
 plumber = require 'gulp-plumber'
 
@@ -56,7 +56,7 @@ compile_css = ->
     .pipe plumber()
     .pipe less()
     .pipe cssimport()
-    .pipe minify_css({ keepSpecialComments: 0 })
+    .pipe clean_css({ keepSpecialComments: 0 })
     .pipe gulp.dest('css')
 
 # 必要なライブラリをまとめる
