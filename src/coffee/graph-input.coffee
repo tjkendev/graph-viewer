@@ -64,11 +64,11 @@ module.exports = class GraphInput
     return null unless input?
 
     lines = input.split('\n')
-    [n, m] = lines[0].split(' ').map(Number)
+    [n, m] = lines[0].trim().split(' ').map(Number)
     m = lines.length - 1 if lines.length < m + 1
 
     edges = lines.slice(1, m + 1).map (line) ->
-        [p, q, r] = line.split(' ')
+        [p, q, r] = line.trim().split(' ')
         v1 = Number(p)
         v2 = Number(q)
         return null if v1 == NaN || v2 == NaN
@@ -90,7 +90,7 @@ module.exports = class GraphInput
     ln = Math.min(n, lines.length)
 
     edges = lines.slice(1, ln).map (line, idx) ->
-        [p, r] = line.split(' ')
+        [p, r] = line.trim().split(' ')
         v1 = idx + 2
         v2 = Number(p)
         return null if v2 == NaN
