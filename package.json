@@ -31,11 +31,12 @@
     "gulp-webpack": "^1.5.0",
     "jquery": "^3.5.1",
     "lodash.template": "^4.5.0",
+    "pug": "^3.0.2",
     "pugify": "^2.2.0",
     "sigma": "^1.2.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
-    "yargs-parser": "^20.2.4"
+    "yargs-parser": "^20.2.6"
   },
   "repository": {
     "url": "https://github.com/tjkendev/graph-viewer"

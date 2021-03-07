@@ -153,6 +153,6 @@ module.exports = class GraphInput
   # placeholderの変更
   setPlaceHolder: ->
     if @graphType == 'graph'
-      @textarea.attr 'placeholder', "Input:\n-----\nn m\np₁ q₁\n...\npₘ qₘ\n-----\nConstraints:\n1≤pᵢ,qᵢ≤n"
+      @textarea.attr 'placeholder', "Input:\nn m\np₁ q₁\n...\npₘ qₘ\n-----\nConstraints:\n1 ≤ pᵢ, qᵢ ≤ n"
     else
-      @textarea.attr 'placeholder', "Input:\n-----\nn\np₂\n...\npₙ\n-----\nConstraints:\n1≤pᵢ≤i-1"
+      @textarea.attr 'placeholder', "Input:\nn\np₂\n...\npₙ\n-----\nConstraints:\n1 ≤ pᵢ ≤ i-1"
