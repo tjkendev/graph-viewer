@@ -41,9 +41,8 @@ compile_main = ->
         entries: ["src/coffee/main.coffee"]
         extensions: ['.coffee', '.pug', '.js']
         paths: ['./node_modules']
+        transform: ['coffeeify', 'pugify']
   }
-      .transform 'coffeeify'
-      .transform 'pugify'
       .bundle()
       .pipe source(app_name)
       .pipe buffer()
