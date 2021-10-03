@@ -2,6 +2,7 @@
   .tab-selector
     .tab-option.left.active(type="graph") Graph
     .tab-option.left(type="tree") Tree
+    .tab-option.left(type="edges") Edges
     .clear
   textarea.graph-input
 
@@ -11,6 +12,10 @@
   label
     input.force-atlas(type="checkbox")
     |ForceAtlas2 Algorithm
+
+  label
+    input.is-directed(type="checkbox")
+    |Directed Graph
 
 .component
   button.random-button(type="button")

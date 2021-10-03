@@ -8,6 +8,7 @@ module.exports = class Graph
       @container.html require('../pug/graph.pug')()
 
     viewer = @container?.find("#graph-viewer")[0]
+    @isDirected = false
 
     @sigma = new sigma {
       renderer: {
@@ -19,6 +20,7 @@ module.exports = class Graph
         edgeLabelSize: 'fixed'
         labelThreshold: 0
         drawEdgeLabels: true
+        minArrowSize: 10
       }
     }
     @graph = @sigma.graph
@@ -35,7 +37,7 @@ module.exports = class Graph
     for i in [1 .. (graph.n)] by 1
       nodes.push {
         id: "n#{i}"
-        label: String(i)
+        label: graph.vlabel[i-1]
         x: Math.random()
         y: Math.random()
         size: 10
@@ -52,7 +54,7 @@ module.exports = class Graph
         target: "n#{v2}"
         size: 5
         color: '#ccc'
-        type: 'line'
+        type: (if @isDirected then 'arrow' else 'line')
       }
 
     @sigma.killForceAtlas2()
@@ -67,14 +69,21 @@ module.exports = class Graph
   doForceAtlas2: (active) ->
     if active
       @sigma.startForceAtlas2 {
-          worker: true
-          gravity: 1
-          scalingRatio: 0.5
-          slowDown: 5
-        }
+        worker: true
+        gravity: 1
+        scalingRatio: 0.5
+        slowDown: 5
+      }
+    else if @sigma.isForceAtlas2Running()
+      @sigma.killForceAtlas2()
+
+  SetDirected: (active) ->
+    if active
+      edge.type = 'arrow' for edge in @graph.edges()
     else
-      if @sigma.isForceAtlas2Running()
-        @sigma.killForceAtlas2()
+      edge.type = 'line' for edge in @graph.edges()
+    @sigma.refresh()
+    @isDirected = active
 
   sigmaStartDrag: (event) ->
     #console.log event
