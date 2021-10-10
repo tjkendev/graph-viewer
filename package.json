@@ -15,7 +15,7 @@
     "browserify": "^17.0.0",
     "clean-css": "^5.2.1",
     "coffeeify": "^3.0.1",
-    "coffeescript": "^2.6.0",
+    "coffeescript": "^2.6.1",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-coffee": "^3.0.3",
